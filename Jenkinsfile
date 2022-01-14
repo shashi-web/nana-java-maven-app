@@ -7,6 +7,7 @@ pipeline {
                 steps {
                     script {
                         echo "build a jar file"
+                        sh "maven --version"
                         echo "build an image from jar file using dockerfile"
                     }
                 }
