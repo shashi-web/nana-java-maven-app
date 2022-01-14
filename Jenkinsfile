@@ -2,12 +2,15 @@
 
 pipeline {
     agent any
+    tools {
+        maven
+    }
         stages {
             stage(build) {
                 steps {
                     script {
                         echo "build a jar file"
-                        sh "npm --version"
+                        sh "mvn --version"
                         echo "build an image from jar file using dockerfile"
                     }
                 }
