@@ -6,19 +6,25 @@ pipeline {
         maven 'maven:3.8'
     }
         stages {
-            stage(build) {
+            stage("build jar") {
                 steps {
                     script {
                         echo "build a jar file"
-                        sh "mvn --version"
-                        echo "build an image from jar file using dockerfile"
+                        sh "mvn build"
+                        sh "mvn package"
                     }
                 }
             }
-            stage(test) {
+            stage("build image") {
                 steps {
                     script {
-                        echo "testing the application..."
+                        echo "building an image from jar file.."
+                        sh "docker build ./target/java-maven-app-1.1.7.jar ."
+//                        withCredentials([
+//                                usernamePassword(credentials: 'DockerHub', usernameVariable: USERNAME, passwordVariable: PASSWORD)
+//                        ]) {
+//                            sh "docker login -u ${USERNAME} -p ${PASSWORD}"
+//                        }
                     }
                 }
             }
