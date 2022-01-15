@@ -1,5 +1,5 @@
 def buildjar() {
-    sh 'mvn package'
+    sh 'mvn clean package'
 }
 
 def buildimage() {
