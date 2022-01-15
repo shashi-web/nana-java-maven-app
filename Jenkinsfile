@@ -1,16 +1,25 @@
 #!/usr/bin/env groovy
 
+def gv
+
 pipeline {
     agent any
     tools {
         maven 'maven:3.8'
     }
         stages {
+            stage("init") {
+                steps {
+                    script {
+                        gv = load "script.groovy"
+                    }
+                }
+            }
             stage("build jar") {
                 steps {
                     script {
                         echo "build a jar file"
-                        sh 'mvn package'
+                        gv.buildjar()
                     }
                 }
             }
@@ -18,20 +27,15 @@ pipeline {
                 steps {
                     script {
                         echo "building an image from jar file.."
-                        sh 'docker build -t shashidhar572/nana-java-maven-app:1.0 .'
-                        withCredentials([
-                                usernamePassword(credentialsId: 'DockerHub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')
-                        ]) {
-                            sh "docker login -u $USERNAME -p $PASSWORD"
-                            sh "docker push shashidhar572/nana-java-maven-app:1.0"
-                        }
+                        gv.buildimage()
                     }
                 }
             }
             stage(deploy) {
                 steps {
                     script {
-                        echo "Deploying the application..."
+                        echo "Deploying the Image into DockerHub..."
+                        gv.deployimage()
                     }
                 }
             }
