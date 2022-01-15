@@ -15,6 +15,13 @@ pipeline {
                     }
                 }
             }
+            stage('Increment version') {
+                steps {
+                    script {
+                        echo 'incrementing the app version'
+                    }
+                }
+            }
             stage("build jar") {
                 steps {
                     script {
