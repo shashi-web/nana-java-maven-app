@@ -10,8 +10,7 @@ pipeline {
                 steps {
                     script {
                         echo "build a jar file"
-                        sh "mvn build"
-                        sh "mvn package"
+                        sh 'mvn package'
                     }
                 }
             }
@@ -19,12 +18,13 @@ pipeline {
                 steps {
                     script {
                         echo "building an image from jar file.."
-                        sh "docker build ./target/java-maven-app-1.1.7.jar ."
-//                        withCredentials([
-//                                usernamePassword(credentials: 'DockerHub', usernameVariable: USERNAME, passwordVariable: PASSWORD)
-//                        ]) {
-//                            sh "docker login -u ${USERNAME} -p ${PASSWORD}"
-//                        }
+                        sh 'docker build -t shashidhar572/nana-java-maven-app:1.0 .'
+                        withCredentials([
+                                usernamePassword(credentials: 'DockerHub', usernameVariable: USERNAME, passwordVariable: PASSWORD)
+                        ]) {
+                            sh "docker login -u ${USERNAME} -p ${PASSWORD}"
+                            sh "docker push shashidhar572/nana-java-maven-app:1.0"
+                        }
                     }
                 }
             }
