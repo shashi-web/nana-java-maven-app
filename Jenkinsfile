@@ -20,6 +20,7 @@ pipeline {
                     script {
                         echo 'incrementing the app version'
                         gv.incrementversion()
+                        env.IMAGE_NAME = "$version-$BUILD_NUMBER"
                     }
                 }
             }
