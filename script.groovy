@@ -15,7 +15,7 @@ def deployimage() {
     }
 }
 
-def commitversioupdate() {
+def commitversionupdate() {
     withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
         // git config here for the first time run
         sh 'git config --global user.email "jenkins@example.com"'
@@ -27,4 +27,5 @@ def commitversioupdate() {
         sh 'git push origin HEAD:jenkins-jobs'
     }
 }
+
 return this

@@ -57,7 +57,7 @@ pipeline {
             steps {
                 script {
                     echo "Commiting the incremented version to github"
-                    gv.commitversioupdate()
+                    gv.commitversionupdate()
                 }
             }
 
