@@ -3,7 +3,7 @@ def buildjar() {
 }
 
 def buildimage() {
-    sh 'docker build -t shashidhar572/nana-java-maven-app:${IMAGE_NAME} .'
+    sh "docker build -t shashidhar572/nana-java-maven-app:${IMAGE_NAME} ."
 }
 
 def deployimage() {
