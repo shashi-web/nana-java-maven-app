@@ -19,10 +19,15 @@ pipeline {
                 steps {
                     script {
                         echo 'incrementing the app version'
-                        gv.incrementversion()
+                        sh 'mvn build-helper:parse-version versions:set \
+                            -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementVersion} \
+                             versions:commit'
+                        def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
+                        def version = matcher[0][1]
                         env.IMAGE_NAME = "$version-$BUILD_NUMBER"
                     }
                 }
+
             }
             stage("build jar") {
                 steps {
